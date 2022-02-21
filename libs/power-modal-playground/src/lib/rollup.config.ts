@@ -40,8 +40,10 @@ const config = [
         presets: [
           '@babel/preset-env',
           '@babel/preset-react',
-          '@babel/preset-typescript'
-        ]
+          '@babel/preset-typescript',
+          '@emotion/babel-preset-css-prop'
+        ],
+        plugins: ['@emotion']
       }),
       del({ targets: ['dist/**/*'] })
     ]
