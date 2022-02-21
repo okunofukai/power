@@ -8,7 +8,10 @@
   },
   "scripts": {
     "preinstall": "husky install",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "build:power-modal": "npm run build -w @okunofukai/power-modal",
+    "build:power-modal-playground": "npm start -w @okunofukai/power-modal-playground",
+    "dev:power-modal": "npm start -w @okunofukai/power-modal-playground"
   },
   "author": "Daveren Cordero",
   "license": "MIT",

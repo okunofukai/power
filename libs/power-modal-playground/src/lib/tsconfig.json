@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.json",
+  "exclude": [
+    "*/rollup.config.ts"
+  ],
+  "include": [
+    "./power-modal"
+  ]
+}

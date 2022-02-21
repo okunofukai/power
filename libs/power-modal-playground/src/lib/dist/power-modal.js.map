@@ -1,0 +1,1 @@
+{"version":3,"file":"power-modal.js","sources":["../src/index.tsx"],"sourcesContent":["const test = (sample: string) => {\r\n  return sample\r\n}\r\n\r\nexport default test"],"names":[],"mappings":";;;;IAAM,IAAI,GAAG,UAAC,MAAc;IAC1B,OAAO,MAAM,CAAA;AACf;;;;"}
