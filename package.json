@@ -10,13 +10,14 @@
     "preinstall": "husky install",
     "precommit": "lint-staged",
     "build:power-modal": "npm run build -w @okunofukai/power-modal",
-    "build:power-modal-playground": "npm start -w @okunofukai/power-modal-playground",
-    "dev:power-modal": "npm start -w @okunofukai/power-modal-playground"
+    "build:power-modal-playground": "npm start -w @okunofukai/react-17-playground",
+    "dev:power-modal": "npm start -w @okunofukai/react-17-playground"
   },
   "author": "Daveren Cordero",
   "license": "MIT",
   "workspaces": [
-    "libs/**/*"
+    "packages/**/*",
+    "playgrounds/**/*"
   ],
   "bugs": {
     "url": "https://github.com/okunofukai/power/issues"
@@ -29,6 +30,7 @@
     "@typescript-eslint/parser": "^5.12.0",
     "eslint": "^8.9.0",
     "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.4.0",
     "eslint-plugin-react": "^7.28.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.4",
