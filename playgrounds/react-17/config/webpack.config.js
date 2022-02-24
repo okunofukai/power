@@ -432,6 +432,7 @@ module.exports = function (webpackEnv) {
 												: "classic",
 										},
 									],
+									"@emotion/babel-preset-css-prop",
 								],
 
 								plugins: [

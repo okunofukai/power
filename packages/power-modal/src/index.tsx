@@ -1,6 +1,6 @@
 import React, { FC, useCallback } from "react";
 import ReactDOM from "react-dom";
-import styled from "@emotion/styled";
+import { css } from "@emotion/react";
 
 export interface PowerModalProps {}
 
@@ -10,13 +10,13 @@ export const PowerModal: FC<PowerModalProps> = (props) => {
 		[]
 	);
 
-	const ModalWrapper = styled.div`
+	const modalWrapperStyles = css`
 		background-color: red;
 	`;
 
 	return (
 		<BodyPortal>
-			<ModalWrapper>Test</ModalWrapper>
+			<div css={modalWrapperStyles}>Test</div>
 		</BodyPortal>
 	);
 };
