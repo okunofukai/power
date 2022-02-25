@@ -27,7 +27,14 @@ export const usePowerModalStyles = () => {
 		useState<CSSObject>({
 			maxWidth: "35rem",
 			margin: "auto",
+			height: "100%",
+			display: "flex",
+			align: "items",
 		});
+
+	const [modalContentStyles, _setModalContentStyles] = useState<CSSObject>(
+		{}
+	);
 
 	const setStyle = useCallback(
 		(
@@ -43,6 +50,10 @@ export const usePowerModalStyles = () => {
 		[]
 	);
 
+	const setModalContentStyles = useCallback(
+		(newValue: CSSObject) => setStyle(_setModalContentStyles, newValue),
+		[_setModalContentStyles]
+	);
 	const setOverlayStyles = useCallback(
 		(newValue: CSSObject) => setStyle(_setOverlayStyles, newValue),
 		[_setOverlayStyles]
@@ -63,5 +74,7 @@ export const usePowerModalStyles = () => {
 		setModalWrapperStyles,
 		modalContainerStyles,
 		setModalContainerStyles,
+		modalContentStyles,
+		setModalContentStyles,
 	};
 };

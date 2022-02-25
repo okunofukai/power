@@ -3,8 +3,9 @@ import React, { FC, forwardRef, useCallback, useImperativeHandle } from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import { usePowerModalStyles } from "./styles";
-import { Overlay, OverlayOptions } from "./Overlay";
-import { ModalContainer, ModalContainerOptions } from "./ModalContainer";
+import { Overlay, OverlayOptions } from "./overlay";
+import { ModalContainer, ModalContainerOptions } from "./modal-container";
+import { ModalContent } from "./modal-content";
 
 export interface PowerModalProps {
 	prefixCls?: string;
@@ -14,11 +15,13 @@ export interface PowerModalProps {
 
 export interface PowerModalRef {
 	overlayStyles: CSSObject;
-	modalWrapperStyles: CSSObject;
-	modalContainerStyles: CSSObject;
 	setOverlayStyles: (newValue: CSSObject) => void;
+	modalWrapperStyles: CSSObject;
 	setModalWrapperStyles: (newValue: CSSObject) => void;
+	modalContainerStyles: CSSObject;
 	setModalContainerStyles: (newValue: CSSObject) => void;
+	modalContentStyles: CSSObject;
+	setModalContentStyles: (newValue: CSSObject) => void;
 }
 
 export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
@@ -32,6 +35,8 @@ export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 			setModalWrapperStyles,
 			modalContainerStyles,
 			setModalContainerStyles,
+			modalContentStyles,
+			setModalContentStyles,
 		} = usePowerModalStyles();
 
 		useImperativeHandle(ref, () => ({
@@ -41,6 +46,8 @@ export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 			setModalWrapperStyles,
 			modalContainerStyles,
 			setModalContainerStyles,
+			modalContentStyles,
+			setModalContentStyles,
 		}));
 
 		const BodyPortal: FC = useCallback(
@@ -64,7 +71,11 @@ export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 						containerOptions={containerOptions}
 						modalContainerStyles={modalContainerStyles}
 						setModalContainerStyles={setModalContainerStyles}>
-						Modal container works!
+						<ModalContent
+							modalContentStyles={modalContentStyles}
+							setModalContentStyles={setModalContentStyles}>
+							Modal container works!
+						</ModalContent>
 					</ModalContainer>
 					<Overlay
 						overlay={overlay}
@@ -80,6 +91,7 @@ PowerModal.displayName = "PowerModal";
 PowerModal.propTypes = {
 	overlay: Overlay.propTypes?.overlay,
 	prefixCls: PropTypes.string,
+	containerOptions: ModalContainer.propTypes?.containerOptions,
 };
 
 export default PowerModal;
