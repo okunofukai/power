@@ -1,13 +1,9 @@
 import { CSSObject } from "@emotion/react";
 import { Dispatch, SetStateAction, useState } from "react";
 
-export interface usePowerModalStylesProps {
-	customStylesOverride?: boolean;
-}
+export interface usePowerModalStylesProps {}
 
-export const usePowerModalStyles = (props: usePowerModalStylesProps) => {
-	const { customStylesOverride } = props;
-
+export const usePowerModalStyles = () => {
 	const [modalWrapperStyles, _setModalWrapperStyles] = useState<CSSObject>({
 		pointerEvents: "none",
 		position: "fixed",
@@ -34,12 +30,11 @@ export const usePowerModalStyles = (props: usePowerModalStylesProps) => {
 
 	const setStyle = (
 		stateSetter: Dispatch<SetStateAction<CSSObject>>,
-		newValue: CSSObject
+		newValue: CSSObject,
+		override?: boolean
 	) =>
 		stateSetter((prevValue) =>
-			customStylesOverride
-				? newValue
-				: ({ ...prevValue, ...newValue } as CSSObject)
+			override ? newValue : ({ ...prevValue, ...newValue } as CSSObject)
 		);
 
 	const setOverlayStyles = (newValue: CSSObject) =>

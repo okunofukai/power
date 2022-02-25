@@ -8,7 +8,6 @@ import { Overlay, OverlayOptions } from "./Overlay";
 export interface PowerModalProps {
 	prefixCls?: string;
 	overlay?: boolean | OverlayOptions;
-	customStylesOverride?: boolean;
 }
 
 export interface PowerModalRef {
@@ -19,7 +18,7 @@ export interface PowerModalRef {
 
 export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 	(props, ref) => {
-		const { overlay, prefixCls, customStylesOverride } = props;
+		const { overlay, prefixCls } = props;
 
 		const {
 			overlayStyles,
@@ -28,9 +27,7 @@ export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 			setModalWrapperStyles,
 			modalContainerStyles,
 			setModalContainerStyles,
-		} = usePowerModalStyles({
-			customStylesOverride,
-		});
+		} = usePowerModalStyles();
 
 		useImperativeHandle(ref, () => ({
 			overlayStyles,
@@ -64,7 +61,6 @@ PowerModal.displayName = "PowerModal";
 PowerModal.propTypes = {
 	overlay: Overlay.propTypes?.overlay,
 	prefixCls: PropTypes.string,
-	customStylesOverride: PropTypes.bool,
 };
 
 export default PowerModal;
