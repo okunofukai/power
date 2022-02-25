@@ -6,12 +6,18 @@ function App() {
 	const modalRef = useRef<PowerModalRef>({} as PowerModalRef);
 
 	useEffect(() => {
-		console.log(modalRef);
+		modalRef.current.setOverlayStyles({});
 	}, [modalRef]);
 
 	return (
 		<div className="App">
-			<PowerModal ref={modalRef} showOverlay={true} />
+			<button onClick={console.log}>HELLO</button>
+			<PowerModal
+				ref={modalRef}
+				overlay={{
+					pointerEvents: false,
+				}}
+			/>
 		</div>
 	);
 }
