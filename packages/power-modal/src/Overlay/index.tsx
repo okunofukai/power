@@ -33,6 +33,7 @@ export const Overlay: FC<OverlayProps> = (props) => {
 
 	return <div css={overlayStyles} />;
 };
+
 Overlay.propTypes = {
 	overlay: PropTypes.oneOfType([
 		PropTypes.bool,

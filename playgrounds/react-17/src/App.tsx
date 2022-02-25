@@ -11,13 +11,8 @@ function App() {
 
 	return (
 		<div className="App">
-			<button onClick={console.log}>HELLO</button>
-			<PowerModal
-				ref={modalRef}
-				overlay={{
-					pointerEvents: false,
-				}}
-			/>
+			<button onClick={console.log}>Button</button>
+			<PowerModal ref={modalRef} />
 		</div>
 	);
 }

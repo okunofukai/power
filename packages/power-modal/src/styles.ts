@@ -1,48 +1,60 @@
 import { CSSObject } from "@emotion/react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 
 export interface usePowerModalStylesProps {}
 
 export const usePowerModalStyles = () => {
 	const [modalWrapperStyles, _setModalWrapperStyles] = useState<CSSObject>({
-		pointerEvents: "none",
-		position: "fixed",
-		height: "100vh",
-		width: "100vw",
 		top: "0",
 		left: "0",
+		width: "100vw",
+		height: "100vh",
+		position: "fixed",
+		pointerEvents: "none",
 	});
 
 	const [overlayStyles, _setOverlayStyles] = useState<CSSObject>({
-		position: "absolute",
 		top: "0",
 		left: "0",
-		height: "100%",
-		width: "100%",
 		zIndex: -1,
+		width: "100%",
+		height: "100%",
+		position: "absolute",
 		backgroundColor: "rgba(0,0,0,0.25)",
 	});
 
 	const [modalContainerStyles, _setModalContainerStyles] =
 		useState<CSSObject>({
-			color: "yellow",
+			maxWidth: "35rem",
+			margin: "auto",
 		});
 
-	const setStyle = (
-		stateSetter: Dispatch<SetStateAction<CSSObject>>,
-		newValue: CSSObject,
-		override?: boolean
-	) =>
-		stateSetter((prevValue) =>
-			override ? newValue : ({ ...prevValue, ...newValue } as CSSObject)
-		);
+	const setStyle = useCallback(
+		(
+			stateSetter: Dispatch<SetStateAction<CSSObject>>,
+			newValue: CSSObject,
+			override?: boolean
+		) =>
+			stateSetter((prevValue) =>
+				override
+					? newValue
+					: ({ ...prevValue, ...newValue } as CSSObject)
+			),
+		[]
+	);
 
-	const setOverlayStyles = (newValue: CSSObject) =>
-		setStyle(_setOverlayStyles, newValue);
-	const setModalWrapperStyles = (newValue: CSSObject) =>
-		setStyle(_setModalWrapperStyles, newValue);
-	const setModalContainerStyles = (newValue: CSSObject) =>
-		setStyle(_setModalContainerStyles, newValue);
+	const setOverlayStyles = useCallback(
+		(newValue: CSSObject) => setStyle(_setOverlayStyles, newValue),
+		[_setOverlayStyles]
+	);
+	const setModalWrapperStyles = useCallback(
+		(newValue: CSSObject) => setStyle(_setModalWrapperStyles, newValue),
+		[_setModalWrapperStyles]
+	);
+	const setModalContainerStyles = useCallback(
+		(newValue: CSSObject) => setStyle(_setModalContainerStyles, newValue),
+		[_setModalContainerStyles]
+	);
 
 	return {
 		overlayStyles,

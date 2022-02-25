@@ -4,13 +4,18 @@ import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import { usePowerModalStyles } from "./styles";
 import { Overlay, OverlayOptions } from "./Overlay";
+import { ModalContainer, ModalContainerOptions } from "./ModalContainer";
 
 export interface PowerModalProps {
 	prefixCls?: string;
 	overlay?: boolean | OverlayOptions;
+	containerOptions?: ModalContainerOptions;
 }
 
 export interface PowerModalRef {
+	overlayStyles: CSSObject;
+	modalWrapperStyles: CSSObject;
+	modalContainerStyles: CSSObject;
 	setOverlayStyles: (newValue: CSSObject) => void;
 	setModalWrapperStyles: (newValue: CSSObject) => void;
 	setModalContainerStyles: (newValue: CSSObject) => void;
@@ -18,7 +23,7 @@ export interface PowerModalRef {
 
 export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 	(props, ref) => {
-		const { overlay, prefixCls } = props;
+		const { overlay, prefixCls, containerOptions } = props;
 
 		const {
 			overlayStyles,
@@ -43,16 +48,30 @@ export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 			[]
 		);
 
+		const ModalWrapper: FC = useCallback(
+			(props) => (
+				<div css={modalWrapperStyles} className={prefixCls}>
+					{props.children}
+				</div>
+			),
+			[modalWrapperStyles, prefixCls]
+		);
+
 		return (
 			<BodyPortal>
-				<div css={modalWrapperStyles} className={prefixCls}>
-					<div css={modalContainerStyles}>TEST</div>
+				<ModalWrapper>
+					<ModalContainer
+						containerOptions={containerOptions}
+						modalContainerStyles={modalContainerStyles}
+						setModalContainerStyles={setModalContainerStyles}>
+						Modal container works!
+					</ModalContainer>
 					<Overlay
 						overlay={overlay}
 						overlayStyles={overlayStyles}
 						setOverlayStyles={setOverlayStyles}
 					/>
-				</div>
+				</ModalWrapper>
 			</BodyPortal>
 		);
 	}
