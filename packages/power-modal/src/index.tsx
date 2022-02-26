@@ -2,7 +2,7 @@ import { CSSObject } from "@emotion/react";
 import React, { FC, forwardRef, useCallback, useImperativeHandle } from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
-import { usePowerModalStyles } from "./styles";
+import { usePowerModalStyles, UsePowerModalStylesValues } from "./styles";
 import { Overlay, OverlayOptions } from "./overlay";
 import { ModalContainer, ModalContainerOptions } from "./modal-container";
 import { ModalContent, ModalContentOptions } from "./modal-content";
@@ -15,47 +15,17 @@ export interface PowerModalProps {
 	contentOptions?: ModalContentOptions;
 }
 
-export interface PowerModalRef {
-	overlayStyles: CSSObject;
-	setOverlayStyles: (newValue: CSSObject) => void;
-	modalWrapperStyles: CSSObject;
-	setModalWrapperStyles: (newValue: CSSObject) => void;
-	modalContainerStyles: CSSObject;
-	setModalContainerStyles: (newValue: CSSObject) => void;
-	modalContentStyles: CSSObject;
-	setModalContentStyles: (newValue: CSSObject) => void;
-	modalBodyStyles: CSSObject;
-	setModalBodyStyles: (newValue: CSSObject) => void;
-}
+export type PowerModalRef = UsePowerModalStylesValues;
 
 export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 	(props, ref) => {
 		const { overlay, prefixCls, containerOptions, contentOptions } = props;
 
-		const {
-			overlayStyles,
-			setOverlayStyles,
-			modalWrapperStyles,
-			setModalWrapperStyles,
-			modalContainerStyles,
-			setModalContainerStyles,
-			modalContentStyles,
-			setModalContentStyles,
-			modalBodyStyles,
-			setModalBodyStyles,
-		} = usePowerModalStyles();
+		const stylesValues = usePowerModalStyles();
+		const { modalWrapperStyles } = stylesValues;
 
 		useImperativeHandle(ref, () => ({
-			overlayStyles,
-			setOverlayStyles,
-			modalWrapperStyles,
-			setModalWrapperStyles,
-			modalContainerStyles,
-			setModalContainerStyles,
-			modalContentStyles,
-			setModalContentStyles,
-			modalBodyStyles,
-			setModalBodyStyles,
+			...stylesValues,
 		}));
 
 		const BodyPortal: FC = useCallback(
@@ -77,24 +47,16 @@ export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 				<ModalWrapper>
 					<ModalContainer
 						containerOptions={containerOptions}
-						modalContainerStyles={modalContainerStyles}
-						setModalContainerStyles={setModalContainerStyles}>
+						stylesValues={stylesValues}>
 						<ModalContent
 							contentOptions={contentOptions}
-							modalContentStyles={modalContentStyles}
-							setModalContentStyles={setModalContentStyles}>
-							<ModalBody
-								modalBodyStyles={modalBodyStyles}
-								setModalBodyStyles={setModalBodyStyles}>
+							stylesValues={stylesValues}>
+							<ModalBody stylesValues={stylesValues}>
 								Modal container works!
 							</ModalBody>
 						</ModalContent>
 					</ModalContainer>
-					<Overlay
-						overlay={overlay}
-						overlayStyles={overlayStyles}
-						setOverlayStyles={setOverlayStyles}
-					/>
+					<Overlay overlay={overlay} stylesValues={stylesValues} />
 				</ModalWrapper>
 			</BodyPortal>
 		);

@@ -1,13 +1,13 @@
-import { CSSObject } from "@emotion/react";
 import React, { FC } from "react";
+import { UsePowerModalStylesValues } from "./styles";
 
 export interface ModalBodyProps {
-	modalBodyStyles: CSSObject;
-	setModalBodyStyles: (newValue: CSSObject) => void;
+	stylesValues: UsePowerModalStylesValues;
 }
 
 export const ModalBody: FC<ModalBodyProps> = (props) => {
-	const { modalBodyStyles, children } = props;
+	const { children, stylesValues } = props;
+	const { modalBodyStyles } = stylesValues;
 
 	return <div css={modalBodyStyles}>{children}</div>;
 };

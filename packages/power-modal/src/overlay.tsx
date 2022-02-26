@@ -1,6 +1,6 @@
-import { CSSObject } from "@emotion/react";
 import React, { FC, useEffect } from "react";
 import PropTypes from "prop-types";
+import { UsePowerModalStylesValues } from "./styles";
 
 export interface OverlayOptions {
 	opacity?: number | null;
@@ -9,15 +9,16 @@ export interface OverlayOptions {
 
 export interface OverlayProps {
 	overlay?: boolean | OverlayOptions;
-	overlayStyles: CSSObject;
-	setOverlayStyles: (newValue: CSSObject) => void;
+	stylesValues: UsePowerModalStylesValues;
 }
 
 export const Overlay: FC<OverlayProps> = (props) => {
-	const { overlay, overlayStyles, setOverlayStyles } = props;
+	const { overlay, stylesValues } = props;
 
 	const showOverlay = !!overlay;
 	if (!showOverlay) return null;
+
+	const { overlayStyles, setOverlayStyles } = stylesValues;
 
 	const overlayOptions =
 		(typeof overlay === "object" && overlay) || undefined;

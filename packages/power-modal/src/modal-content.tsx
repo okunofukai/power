@@ -1,6 +1,6 @@
-import { CSSObject } from "@emotion/react";
 import React, { FC, useEffect } from "react";
 import PropTypes from "prop-types";
+import { UsePowerModalStylesValues } from "./styles";
 
 export interface ModalContentOptions {
 	dynamicWidth?: boolean | null;
@@ -8,17 +8,13 @@ export interface ModalContentOptions {
 
 export interface ModalContentProps {
 	contentOptions?: ModalContentOptions;
-	modalContentStyles: CSSObject;
-	setModalContentStyles: (newValue: CSSObject) => void;
+	stylesValues: UsePowerModalStylesValues;
 }
 
 export const ModalContent: FC<ModalContentProps> = (props) => {
-	const {
-		contentOptions,
-		modalContentStyles,
-		setModalContentStyles,
-		children,
-	} = props;
+	const { contentOptions, stylesValues, children } = props;
+
+	const { modalContentStyles, setModalContentStyles } = stylesValues;
 
 	useEffect(() => {
 		if (!contentOptions) return;

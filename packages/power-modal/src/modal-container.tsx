@@ -1,6 +1,6 @@
-import { CSSObject } from "@emotion/react";
 import React, { FC, useEffect } from "react";
 import PropTypes from "prop-types";
+import { UsePowerModalStylesValues } from "./styles";
 
 export interface ModalContainerOptions {
 	width?: string | null;
@@ -8,17 +8,13 @@ export interface ModalContainerOptions {
 
 export interface ModalContainer {
 	containerOptions?: ModalContainerOptions;
-	modalContainerStyles: CSSObject;
-	setModalContainerStyles: (newValue: CSSObject) => void;
+	stylesValues: UsePowerModalStylesValues;
 }
 
 export const ModalContainer: FC<ModalContainer> = (props) => {
-	const {
-		containerOptions,
-		modalContainerStyles,
-		setModalContainerStyles,
-		children,
-	} = props;
+	const { containerOptions, stylesValues, children } = props;
+
+	const { modalContainerStyles, setModalContainerStyles } = stylesValues;
 
 	useEffect(() => {
 		if (!containerOptions) return;

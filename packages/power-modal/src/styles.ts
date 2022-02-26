@@ -1,6 +1,19 @@
 import { CSSObject } from "@emotion/react";
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
 
+export interface UsePowerModalStylesValues {
+	overlayStyles: CSSObject;
+	setOverlayStyles: (newValue: CSSObject) => void;
+	modalWrapperStyles: CSSObject;
+	setModalWrapperStyles: (newValue: CSSObject) => void;
+	modalContainerStyles: CSSObject;
+	setModalContainerStyles: (newValue: CSSObject) => void;
+	modalContentStyles: CSSObject;
+	setModalContentStyles: (newValue: CSSObject) => void;
+	modalBodyStyles: CSSObject;
+	setModalBodyStyles: (newValue: CSSObject) => void;
+}
+
 export const usePowerModalStyles = () => {
 	const [modalWrapperStyles, _setModalWrapperStyles] = useState<CSSObject>({
 		top: "0",
@@ -91,5 +104,5 @@ export const usePowerModalStyles = () => {
 		setModalContentStyles,
 		modalBodyStyles,
 		setModalBodyStyles,
-	};
+	} as UsePowerModalStylesValues;
 };
