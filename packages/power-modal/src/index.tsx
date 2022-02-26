@@ -5,12 +5,14 @@ import PropTypes from "prop-types";
 import { usePowerModalStyles } from "./styles";
 import { Overlay, OverlayOptions } from "./overlay";
 import { ModalContainer, ModalContainerOptions } from "./modal-container";
-import { ModalContent } from "./modal-content";
+import { ModalContent, ModalContentOptions } from "./modal-content";
+import { ModalBody } from "./modal-body";
 
 export interface PowerModalProps {
 	prefixCls?: string;
 	overlay?: boolean | OverlayOptions;
 	containerOptions?: ModalContainerOptions;
+	contentOptions?: ModalContentOptions;
 }
 
 export interface PowerModalRef {
@@ -22,11 +24,13 @@ export interface PowerModalRef {
 	setModalContainerStyles: (newValue: CSSObject) => void;
 	modalContentStyles: CSSObject;
 	setModalContentStyles: (newValue: CSSObject) => void;
+	modalBodyStyles: CSSObject;
+	setModalBodyStyles: (newValue: CSSObject) => void;
 }
 
 export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 	(props, ref) => {
-		const { overlay, prefixCls, containerOptions } = props;
+		const { overlay, prefixCls, containerOptions, contentOptions } = props;
 
 		const {
 			overlayStyles,
@@ -37,6 +41,8 @@ export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 			setModalContainerStyles,
 			modalContentStyles,
 			setModalContentStyles,
+			modalBodyStyles,
+			setModalBodyStyles,
 		} = usePowerModalStyles();
 
 		useImperativeHandle(ref, () => ({
@@ -48,6 +54,8 @@ export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 			setModalContainerStyles,
 			modalContentStyles,
 			setModalContentStyles,
+			modalBodyStyles,
+			setModalBodyStyles,
 		}));
 
 		const BodyPortal: FC = useCallback(
@@ -72,9 +80,14 @@ export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 						modalContainerStyles={modalContainerStyles}
 						setModalContainerStyles={setModalContainerStyles}>
 						<ModalContent
+							contentOptions={contentOptions}
 							modalContentStyles={modalContentStyles}
 							setModalContentStyles={setModalContentStyles}>
-							Modal container works!
+							<ModalBody
+								modalBodyStyles={modalBodyStyles}
+								setModalBodyStyles={setModalBodyStyles}>
+								Modal container works!
+							</ModalBody>
 						</ModalContent>
 					</ModalContainer>
 					<Overlay

@@ -12,7 +12,7 @@ function App() {
 	return (
 		<div className="App">
 			<button onClick={console.log}>Button</button>
-			<PowerModal ref={modalRef} />
+			<PowerModal ref={modalRef} overlay={true} />
 		</div>
 	);
 }

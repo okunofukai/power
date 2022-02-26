@@ -1,12 +1,11 @@
 import { CSSObject } from "@emotion/react";
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
 
-export interface usePowerModalStylesProps {}
-
 export const usePowerModalStyles = () => {
 	const [modalWrapperStyles, _setModalWrapperStyles] = useState<CSSObject>({
 		top: "0",
 		left: "0",
+		zIndex: 1000,
 		width: "100vw",
 		height: "100vh",
 		position: "fixed",
@@ -20,21 +19,31 @@ export const usePowerModalStyles = () => {
 		width: "100%",
 		height: "100%",
 		position: "absolute",
+		pointerEvents: "auto",
 		backgroundColor: "rgba(0,0,0,0.25)",
 	});
 
 	const [modalContainerStyles, _setModalContainerStyles] =
 		useState<CSSObject>({
-			maxWidth: "35rem",
 			margin: "auto",
 			height: "100%",
 			display: "flex",
-			align: "items",
+			position: "relative",
+			maxWidth: "35rem",
+			alignItems: "center",
+			pointerEvents: "auto",
+			flexDirection: "column",
+			justifyContent: "center",
 		});
 
-	const [modalContentStyles, _setModalContentStyles] = useState<CSSObject>(
-		{}
-	);
+	const [modalContentStyles, _setModalContentStyles] = useState<CSSObject>({
+		borderRadius: "0.5rem",
+		backgroundColor: "white",
+	});
+
+	const [modalBodyStyles, _setModalBodyStyles] = useState<CSSObject>({
+		padding: "1rem",
+	});
 
 	const setStyle = useCallback(
 		(
@@ -50,6 +59,10 @@ export const usePowerModalStyles = () => {
 		[]
 	);
 
+	const setModalBodyStyles = useCallback(
+		(newValue: CSSObject) => setStyle(_setModalBodyStyles, newValue),
+		[_setModalBodyStyles]
+	);
 	const setModalContentStyles = useCallback(
 		(newValue: CSSObject) => setStyle(_setModalContentStyles, newValue),
 		[_setModalContentStyles]
@@ -76,5 +89,7 @@ export const usePowerModalStyles = () => {
 		setModalContainerStyles,
 		modalContentStyles,
 		setModalContentStyles,
+		modalBodyStyles,
+		setModalBodyStyles,
 	};
 };
