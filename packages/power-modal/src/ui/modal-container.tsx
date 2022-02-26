@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from "react";
 import PropTypes from "prop-types";
-import { UsePowerModalStylesValues } from "./styles";
+import { UseModalStylesValues } from "../hooks/use-modal-styles";
 
 export interface ModalContainerOptions {
 	width?: string | null;
@@ -8,7 +8,7 @@ export interface ModalContainerOptions {
 
 export interface ModalContainer {
 	containerOptions?: ModalContainerOptions;
-	stylesValues: UsePowerModalStylesValues;
+	stylesValues: UseModalStylesValues;
 }
 
 export const ModalContainer: FC<ModalContainer> = (props) => {

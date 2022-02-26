@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from "react";
 import PropTypes from "prop-types";
-import { UsePowerModalStylesValues } from "./styles";
+import { UseModalStylesValues } from "../hooks/use-modal-styles";
 
 export interface ModalContentOptions {
 	dynamicWidth?: boolean | null;
@@ -8,7 +8,7 @@ export interface ModalContentOptions {
 
 export interface ModalContentProps {
 	contentOptions?: ModalContentOptions;
-	stylesValues: UsePowerModalStylesValues;
+	stylesValues: UseModalStylesValues;
 }
 
 export const ModalContent: FC<ModalContentProps> = (props) => {

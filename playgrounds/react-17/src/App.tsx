@@ -11,8 +11,12 @@ function App() {
 
 	return (
 		<div className="App">
-			<button onClick={console.log}>Button</button>
-			<PowerModal ref={modalRef} overlay={true} />
+			<button onClick={() => modalRef.current?.toggleModalVisibility()}>
+				Button
+			</button>
+			<PowerModal ref={modalRef} overlay={true}>
+				Modal works!
+			</PowerModal>
 		</div>
 	);
 }

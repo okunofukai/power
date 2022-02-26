@@ -1,23 +1,27 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
-import { UsePowerModalStylesValues } from "./styles";
+import { UseModalStylesValues } from "../hooks/use-modal-styles";
+import { UseModalValues } from "../hooks/use-modal";
 
 export interface OverlayOptions {
 	opacity?: number | null;
+	triggersClose?: boolean | null;
 	pointerEvents?: boolean | null;
 }
 
 export interface OverlayProps {
 	overlay?: boolean | OverlayOptions;
-	stylesValues: UsePowerModalStylesValues;
+	modalValues: UseModalValues;
+	stylesValues: UseModalStylesValues;
 }
 
 export const Overlay: FC<OverlayProps> = (props) => {
-	const { overlay, stylesValues } = props;
+	const { overlay, stylesValues, modalValues } = props;
 
 	const showOverlay = !!overlay;
 	if (!showOverlay) return null;
 
+	const { setShowModal } = modalValues;
 	const { overlayStyles, setOverlayStyles } = stylesValues;
 
 	const overlayOptions =
@@ -25,14 +29,19 @@ export const Overlay: FC<OverlayProps> = (props) => {
 
 	useEffect(() => {
 		if (!overlayOptions) return;
-		const { pointerEvents, opacity } = overlayOptions;
+		const { pointerEvents = true, triggersClose, opacity } = overlayOptions;
 		setOverlayStyles({
+			cursor: triggersClose ? "pointer" : "default",
 			pointerEvents: pointerEvents ? "auto" : "none",
 			backgroundColor: `rgba(0,0,0,${opacity || 0.25})`,
 		});
 	}, [overlayOptions]);
 
-	return <div css={overlayStyles} />;
+	const onClick = useCallback(() => {
+		if (overlayOptions?.triggersClose) setShowModal(false);
+	}, []);
+
+	return <div css={overlayStyles} onClick={onClick} />;
 };
 
 Overlay.propTypes = {
@@ -41,6 +50,7 @@ Overlay.propTypes = {
 		PropTypes.shape({
 			opacity: PropTypes.number,
 			pointerEvents: PropTypes.bool,
+			triggersClose: PropTypes.bool,
 		}),
 	]),
 };

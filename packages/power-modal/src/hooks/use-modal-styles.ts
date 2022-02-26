@@ -1,7 +1,7 @@
 import { CSSObject } from "@emotion/react";
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
 
-export interface UsePowerModalStylesValues {
+export interface UseModalStylesValues {
 	overlayStyles: CSSObject;
 	setOverlayStyles: (newValue: CSSObject) => void;
 	modalWrapperStyles: CSSObject;
@@ -14,7 +14,7 @@ export interface UsePowerModalStylesValues {
 	setModalBodyStyles: (newValue: CSSObject) => void;
 }
 
-export const usePowerModalStyles = () => {
+export const useModalStyles = () => {
 	const [modalWrapperStyles, _setModalWrapperStyles] = useState<CSSObject>({
 		top: "0",
 		left: "0",
@@ -104,5 +104,5 @@ export const usePowerModalStyles = () => {
 		setModalContentStyles,
 		modalBodyStyles,
 		setModalBodyStyles,
-	} as UsePowerModalStylesValues;
+	} as UseModalStylesValues;
 };

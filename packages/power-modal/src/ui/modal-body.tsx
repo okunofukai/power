@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import { UsePowerModalStylesValues } from "./styles";
+import { UseModalStylesValues } from "../hooks/use-modal-styles";
 
 export interface ModalBodyProps {
-	stylesValues: UsePowerModalStylesValues;
+	stylesValues: UseModalStylesValues;
 }
 
 export const ModalBody: FC<ModalBodyProps> = (props) => {

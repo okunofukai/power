@@ -1,6 +1,7 @@
 import React, { FC } from "react";
-import { UsePowerModalStylesValues } from "./styles";
+import { UseModalStylesValues } from "../hooks/use-modal-styles";
 import PropTypes from "prop-types";
+import { UseModalValues } from "../hooks/use-modal";
 
 export interface ModalWrapperOptions {
 	prefixCls?: string | null;
@@ -8,11 +9,15 @@ export interface ModalWrapperOptions {
 
 export interface ModalWrapperProps {
 	wrapperOptions?: ModalWrapperOptions;
-	stylesValues: UsePowerModalStylesValues;
+	modalValues: UseModalValues;
+	stylesValues: UseModalStylesValues;
 }
 
 export const ModalWrapper: FC<ModalWrapperProps> = (props) => {
-	const { children, stylesValues, wrapperOptions = {} } = props;
+	const { children, modalValues, stylesValues, wrapperOptions = {} } = props;
+
+	const { showModal } = modalValues;
+	if (!showModal) return null;
 
 	const { modalWrapperStyles } = stylesValues;
 	const { prefixCls } = wrapperOptions;
