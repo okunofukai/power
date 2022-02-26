@@ -7,10 +7,11 @@ import { Overlay, OverlayOptions } from "./overlay";
 import { ModalContainer, ModalContainerOptions } from "./modal-container";
 import { ModalContent, ModalContentOptions } from "./modal-content";
 import { ModalBody } from "./modal-body";
+import { ModalWrapper, ModalWrapperOptions } from "./modal-wrapper";
 
 export interface PowerModalProps {
-	prefixCls?: string;
 	overlay?: boolean | OverlayOptions;
+	wrapperOptions?: ModalWrapperOptions;
 	containerOptions?: ModalContainerOptions;
 	contentOptions?: ModalContentOptions;
 }
@@ -19,10 +20,10 @@ export type PowerModalRef = UsePowerModalStylesValues;
 
 export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 	(props, ref) => {
-		const { overlay, prefixCls, containerOptions, contentOptions } = props;
+		const { overlay, wrapperOptions, containerOptions, contentOptions } =
+			props;
 
 		const stylesValues = usePowerModalStyles();
-		const { modalWrapperStyles } = stylesValues;
 
 		useImperativeHandle(ref, () => ({
 			...stylesValues,
@@ -33,18 +34,11 @@ export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 			[]
 		);
 
-		const ModalWrapper: FC = useCallback(
-			(props) => (
-				<div css={modalWrapperStyles} className={prefixCls}>
-					{props.children}
-				</div>
-			),
-			[modalWrapperStyles, prefixCls]
-		);
-
 		return (
 			<BodyPortal>
-				<ModalWrapper>
+				<ModalWrapper
+					wrapperOptions={wrapperOptions}
+					stylesValues={stylesValues}>
 					<ModalContainer
 						containerOptions={containerOptions}
 						stylesValues={stylesValues}>
@@ -52,7 +46,7 @@ export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 							contentOptions={contentOptions}
 							stylesValues={stylesValues}>
 							<ModalBody stylesValues={stylesValues}>
-								Modal container works!
+								Modal body works!
 							</ModalBody>
 						</ModalContent>
 					</ModalContainer>
@@ -65,8 +59,9 @@ export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 PowerModal.displayName = "PowerModal";
 PowerModal.propTypes = {
 	overlay: Overlay.propTypes?.overlay,
-	prefixCls: PropTypes.string,
+	wrapperOptions: ModalWrapper.propTypes?.wrapperOptions,
 	containerOptions: ModalContainer.propTypes?.containerOptions,
+	contentOptions: ModalContent.propTypes?.contentOptions,
 };
 
 export default PowerModal;
