@@ -44,13 +44,13 @@ export const usePowerModalStyles = () => {
 			position: "relative",
 			maxWidth: "35rem",
 			alignItems: "center",
-			pointerEvents: "auto",
 			flexDirection: "column",
 			justifyContent: "center",
 		});
 
 	const [modalContentStyles, _setModalContentStyles] = useState<CSSObject>({
 		borderRadius: "0.5rem",
+		pointerEvents: "auto",
 		backgroundColor: "white",
 	});
 
