@@ -14,7 +14,7 @@ function App() {
 			<button onClick={() => modalRef.current?.toggleModalVisibility()}>
 				Button
 			</button>
-			<PowerModal ref={modalRef} overlay={true}>
+			<PowerModal ref={modalRef} overlay={true} visible={true}>
 				Modal works!
 			</PowerModal>
 		</div>

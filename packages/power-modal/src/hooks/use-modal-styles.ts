@@ -1,5 +1,12 @@
 import { CSSObject } from "@emotion/react";
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
+import {
+	Dispatch,
+	SetStateAction,
+	useCallback,
+	useMemo,
+	useState,
+} from "react";
+import PropTypes from "prop-types";
 
 export interface UseModalStylesValues {
 	overlayStyles: CSSObject;
@@ -14,49 +21,81 @@ export interface UseModalStylesValues {
 	setModalBodyStyles: (newValue: CSSObject) => void;
 }
 
-export const useModalStyles = () => {
-	const [modalWrapperStyles, _setModalWrapperStyles] = useState<CSSObject>({
-		top: "0",
-		left: "0",
-		zIndex: 1000,
-		width: "100vw",
-		height: "100vh",
-		position: "fixed",
-		pointerEvents: "none",
-	});
+export interface ModalTheme {
+	modalWrapperStyles?: CSSObject;
+	modalContainerStyles?: CSSObject;
+	modalContentStyles?: CSSObject;
+	modalBodyStyles?: CSSObject;
+	overlayStyles?: CSSObject;
+}
 
-	const [overlayStyles, _setOverlayStyles] = useState<CSSObject>({
-		top: "0",
-		left: "0",
-		zIndex: -1,
-		width: "100%",
-		height: "100%",
-		position: "absolute",
-		pointerEvents: "auto",
-		backgroundColor: "rgba(0,0,0,0.25)",
-	});
+export const ModalThemePropType = PropTypes.objectOf(PropTypes.object);
 
-	const [modalContainerStyles, _setModalContainerStyles] =
-		useState<CSSObject>({
-			margin: "auto",
-			height: "100%",
-			display: "flex",
-			position: "relative",
-			maxWidth: "35rem",
-			alignItems: "center",
-			flexDirection: "column",
-			justifyContent: "center",
-		});
+export const useModalStyles = (theme?: ModalTheme) => {
+	const defaultTheme = useMemo<Required<ModalTheme>>(
+		() => ({
+			modalWrapperStyles: {
+				top: "0",
+				left: "0",
+				zIndex: 1000,
+				width: "100vw",
+				height: "100vh",
+				position: "fixed",
+				pointerEvents: "none",
+			},
+			overlayStyles: {
+				top: "0",
+				left: "0",
+				zIndex: -1,
+				width: "100%",
+				height: "100%",
+				position: "absolute",
+				pointerEvents: "auto",
+				backgroundColor: "rgba(0,0,0,0.25)",
+			},
+			modalContainerStyles: {
+				margin: "auto",
+				height: "100%",
+				display: "flex",
+				position: "relative",
+				maxWidth: "35rem",
+				alignItems: "center",
+				flexDirection: "column",
+				justifyContent: "center",
+			},
+			modalContentStyles: {
+				borderRadius: "0.5rem",
+				pointerEvents: "auto",
+				backgroundColor: "white",
+			},
+			modalBodyStyles: {
+				padding: "1rem",
+			},
+		}),
+		[]
+	);
 
-	const [modalContentStyles, _setModalContentStyles] = useState<CSSObject>({
-		borderRadius: "0.5rem",
-		pointerEvents: "auto",
-		backgroundColor: "white",
-	});
+	const deepMergeTheme = useCallback(
+		(toTheme: ModalTheme, fromTheme: ModalTheme) => {
+			const toThemeEntries = Object.entries(toTheme);
+			return toThemeEntries.reduce((prev, curr) => {
+				const [key, value] = curr as [keyof ModalTheme, CSSObject];
+				return {
+					...prev,
+					[key]: {
+						...value,
+						...fromTheme?.[key],
+					},
+				};
+			}, {}) as Required<ModalTheme>;
+		},
+		[]
+	);
 
-	const [modalBodyStyles, _setModalBodyStyles] = useState<CSSObject>({
-		padding: "1rem",
-	});
+	const computedTheme = useMemo<Required<ModalTheme>>(
+		() => deepMergeTheme(defaultTheme, (theme = {})),
+		[defaultTheme, theme]
+	);
 
 	const setStyle = useCallback(
 		(
@@ -72,6 +111,23 @@ export const useModalStyles = () => {
 		[]
 	);
 
+	// STYLE STATES
+	const [modalWrapperStyles, _setModalWrapperStyles] = useState<CSSObject>(
+		computedTheme.modalWrapperStyles
+	);
+	const [overlayStyles, _setOverlayStyles] = useState<CSSObject>(
+		computedTheme.overlayStyles
+	);
+	const [modalContainerStyles, _setModalContainerStyles] =
+		useState<CSSObject>(computedTheme.modalContainerStyles);
+	const [modalContentStyles, _setModalContentStyles] = useState<CSSObject>(
+		computedTheme.modalContentStyles
+	);
+	const [modalBodyStyles, _setModalBodyStyles] = useState<CSSObject>(
+		computedTheme.modalBodyStyles
+	);
+
+	// STYLE SETTERS
 	const setModalBodyStyles = useCallback(
 		(newValue: CSSObject) => setStyle(_setModalBodyStyles, newValue),
 		[_setModalBodyStyles]

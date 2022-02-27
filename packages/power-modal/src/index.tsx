@@ -6,7 +6,12 @@ import React, {
 	useImperativeHandle,
 } from "react";
 import ReactDOM from "react-dom";
-import { useModalStyles, UseModalStylesValues } from "./hooks/use-modal-styles";
+import {
+	ModalTheme,
+	ModalThemePropType,
+	useModalStyles,
+	UseModalStylesValues,
+} from "./hooks/use-modal-styles";
 import { Overlay, OverlayOptions } from "./ui/overlay";
 import { ModalContainer, ModalContainerOptions } from "./ui/modal-container";
 import { ModalContent, ModalContentOptions } from "./ui/modal-content";
@@ -18,6 +23,7 @@ import { useModal, UseModalValues } from "./hooks/use-modal";
 export interface PowerModalProps {
 	children?: ReactNode | null;
 	visible?: boolean;
+	theme?: ModalTheme;
 	overlay?: boolean | OverlayOptions;
 	wrapperOptions?: ModalWrapperOptions;
 	containerOptions?: ModalContainerOptions;
@@ -29,6 +35,7 @@ export type PowerModalRef = UseModalStylesValues & UseModalValues;
 export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 	(props, ref) => {
 		const {
+			theme,
 			overlay,
 			visible,
 			wrapperOptions,
@@ -38,7 +45,7 @@ export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 		} = props;
 
 		const modalValues = useModal({ visible });
-		const stylesValues = useModalStyles();
+		const stylesValues = useModalStyles(theme);
 
 		useImperativeHandle(ref, () => ({
 			...stylesValues,
@@ -80,6 +87,7 @@ export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 PowerModal.displayName = "PowerModal";
 PowerModal.propTypes = {
 	visible: PropTypes.bool,
+	theme: ModalThemePropType,
 	overlay: Overlay.propTypes?.overlay,
 	wrapperOptions: ModalWrapper.propTypes?.wrapperOptions,
 	containerOptions: ModalContainer.propTypes?.containerOptions,
