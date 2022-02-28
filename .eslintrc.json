@@ -18,6 +18,10 @@
     },
     "plugins": [
         "react",
-        "@typescript-eslint"
-    ]
+        "@typescript-eslint",
+        "eslint-plugin-tsdoc"
+    ],
+    "rules": {
+        "tsdoc/syntax": "warn"
+    }
 }
