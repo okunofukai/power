@@ -19,13 +19,13 @@ import { ModalBody } from "./ui/modal-body";
 import { ModalWrapper, ModalWrapperOptions } from "./ui/modal-wrapper";
 import PropTypes from "prop-types";
 import { useModal, UseModalValues } from "./hooks/use-modal";
-import { ModalFooter, ModalFooterOptions } from "./ui/modal-footer";
+import { ModalFooter } from "./ui/modal-footer";
 
 export interface PowerModalProps {
 	children?: ReactNode | null;
 	visible?: boolean;
 	theme?: ModalTheme;
-	footer?: boolean | ModalFooterOptions;
+	footer?: boolean | ReactNode;
 	overlay?: boolean | OverlayOptions;
 	wrapperOptions?: ModalWrapperOptions;
 	containerOptions?: ModalContainerOptions;

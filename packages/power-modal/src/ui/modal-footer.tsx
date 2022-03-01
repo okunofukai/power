@@ -1,19 +1,17 @@
-import React, { FC } from "react";
+import React, { FC, ReactNode } from "react";
 import { UseModalStylesValues } from "../hooks/use-modal-styles";
 import PropTypes from "prop-types";
 import FooterButtons from "../components/FooterButton/footer-buttons";
 import { UseModalValues } from "../hooks/use-modal";
 
-export interface ModalFooterOptions {}
-
 export interface ModalFooterProps {
-	footer?: boolean | ModalFooterOptions;
+	footer?: boolean | ReactNode;
 	modalValues: UseModalValues;
 	stylesValues: UseModalStylesValues;
 }
 
 export const ModalFooter: FC<ModalFooterProps> = (props) => {
-	const { modalValues, stylesValues } = props;
+	const { modalValues, stylesValues, footer = true } = props;
 
 	const { setShowModal } = modalValues;
 	const { modalFooterStyles } = stylesValues;
@@ -26,7 +24,10 @@ export const ModalFooter: FC<ModalFooterProps> = (props) => {
 		</FooterButtons>
 	);
 
-	return <div css={modalFooterStyles}>{defaultFooter}</div>;
+	const footerContent =
+		typeof footer === "object" ? footer : footer ? defaultFooter : null;
+
+	return <div css={modalFooterStyles}>{footerContent}</div>;
 };
 
 ModalFooter.propTypes = {
