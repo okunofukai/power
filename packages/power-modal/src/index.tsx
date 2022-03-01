@@ -19,11 +19,13 @@ import { ModalBody } from "./ui/modal-body";
 import { ModalWrapper, ModalWrapperOptions } from "./ui/modal-wrapper";
 import PropTypes from "prop-types";
 import { useModal, UseModalValues } from "./hooks/use-modal";
+import { ModalFooter, ModalFooterOptions } from "./ui/modal-footer";
 
 export interface PowerModalProps {
 	children?: ReactNode | null;
 	visible?: boolean;
 	theme?: ModalTheme;
+	footer?: boolean | ModalFooterOptions;
 	overlay?: boolean | OverlayOptions;
 	wrapperOptions?: ModalWrapperOptions;
 	containerOptions?: ModalContainerOptions;
@@ -36,6 +38,7 @@ export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 	(props, ref) => {
 		const {
 			theme,
+			footer,
 			overlay,
 			visible,
 			wrapperOptions,
@@ -72,6 +75,11 @@ export const PowerModal = forwardRef<PowerModalRef, PowerModalProps>(
 							<ModalBody stylesValues={stylesValues}>
 								{children}
 							</ModalBody>
+							<ModalFooter
+								footer={footer}
+								modalValues={modalValues}
+								stylesValues={stylesValues}
+							/>
 						</ModalContent>
 					</ModalContainer>
 					<Overlay
@@ -89,6 +97,7 @@ PowerModal.propTypes = {
 	visible: PropTypes.bool,
 	theme: ModalThemePropType,
 	overlay: Overlay.propTypes?.overlay,
+	footer: ModalFooter.propTypes?.footer,
 	wrapperOptions: ModalWrapper.propTypes?.wrapperOptions,
 	containerOptions: ModalContainer.propTypes?.containerOptions,
 	contentOptions: ModalContent.propTypes?.contentOptions,
@@ -96,3 +105,4 @@ PowerModal.propTypes = {
 };
 
 export default PowerModal;
+export { default as FooterButton } from "./components/FooterButton/footer-buttons";

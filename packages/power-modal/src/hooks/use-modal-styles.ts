@@ -8,28 +8,26 @@ import {
 } from "react";
 import PropTypes from "prop-types";
 
-export interface UseModalStylesValues {
-	overlayStyles: CSSObject;
-	setOverlayStyles: (newValue: CSSObject) => void;
-	modalWrapperStyles: CSSObject;
-	setModalWrapperStyles: (newValue: CSSObject) => void;
-	modalContainerStyles: CSSObject;
-	setModalContainerStyles: (newValue: CSSObject) => void;
-	modalContentStyles: CSSObject;
-	setModalContentStyles: (newValue: CSSObject) => void;
-	modalBodyStyles: CSSObject;
-	setModalBodyStyles: (newValue: CSSObject) => void;
-}
+export type UseModalStylesValues = ModalTheme & ModalThemeSetters;
+export const ModalThemePropType = PropTypes.objectOf(PropTypes.object);
 
 export interface ModalTheme {
 	modalWrapperStyles?: CSSObject;
 	modalContainerStyles?: CSSObject;
 	modalContentStyles?: CSSObject;
 	modalBodyStyles?: CSSObject;
+	modalFooterStyles?: CSSObject;
 	overlayStyles?: CSSObject;
 }
 
-export const ModalThemePropType = PropTypes.objectOf(PropTypes.object);
+export interface ModalThemeSetters {
+	setOverlayStyles: (newValue: CSSObject) => void;
+	setModalWrapperStyles: (newValue: CSSObject) => void;
+	setModalContainerStyles: (newValue: CSSObject) => void;
+	setModalContentStyles: (newValue: CSSObject) => void;
+	setModalBodyStyles: (newValue: CSSObject) => void;
+	setModalFooterStyles: (newValue: CSSObject) => void;
+}
 
 export const useModalStyles = (theme?: ModalTheme) => {
 	const defaultTheme = useMemo<Required<ModalTheme>>(
@@ -64,12 +62,16 @@ export const useModalStyles = (theme?: ModalTheme) => {
 				justifyContent: "center",
 			},
 			modalContentStyles: {
-				borderRadius: "0.5rem",
+				overflow: "hidden",
 				pointerEvents: "auto",
+				borderRadius: "0.5rem",
 				backgroundColor: "white",
 			},
 			modalBodyStyles: {
 				padding: "1rem",
+			},
+			modalFooterStyles: {
+				borderTop: "0.05rem solid rgba(0,0,0,0.05)",
 			},
 		}),
 		[]
@@ -112,6 +114,9 @@ export const useModalStyles = (theme?: ModalTheme) => {
 	);
 
 	// STYLE STATES
+	const [modalFooterStyles, _setModalFooterStyles] = useState<CSSObject>(
+		computedTheme.modalFooterStyles
+	);
 	const [modalWrapperStyles, _setModalWrapperStyles] = useState<CSSObject>(
 		computedTheme.modalWrapperStyles
 	);
@@ -128,6 +133,10 @@ export const useModalStyles = (theme?: ModalTheme) => {
 	);
 
 	// STYLE SETTERS
+	const setModalFooterStyles = useCallback(
+		(newValue: CSSObject) => setStyle(_setModalFooterStyles, newValue),
+		[_setModalFooterStyles]
+	);
 	const setModalBodyStyles = useCallback(
 		(newValue: CSSObject) => setStyle(_setModalBodyStyles, newValue),
 		[_setModalBodyStyles]
@@ -160,5 +169,7 @@ export const useModalStyles = (theme?: ModalTheme) => {
 		setModalContentStyles,
 		modalBodyStyles,
 		setModalBodyStyles,
+		modalFooterStyles,
+		setModalFooterStyles,
 	} as UseModalStylesValues;
 };
